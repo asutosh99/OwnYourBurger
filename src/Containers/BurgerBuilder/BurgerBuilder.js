@@ -8,10 +8,10 @@ import axios from "../../axios-order.js"
 import Spinner from '../../Components/UI/Spinner/Spinner' 
 import withErrorHandler from '../../hoc/WithErrorHandler/WithErrorHandler';
 const  INGREDIENT_PRICE={
-    salad:0.45,
-    bacon:0.85,
-    cheese:1.25,
-    meat:0.56
+    salad:10,
+    bacon:11.25,
+    cheese:5.25,
+    meat:30.56
  
 }
 
