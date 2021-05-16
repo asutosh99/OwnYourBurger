@@ -21,7 +21,7 @@ class BurgerBuilder extends Component{
 }
 
 componentDidMount(){
-   console.log(this.props);
+//    console.log(this.props);
    this.props.onInItIngredients();
     // axios.get('https://burger2-876e0-default-rtdb.asia-southeast1.firebasedatabase.app/ingredients.json')
     // .then(response=> 
@@ -72,7 +72,12 @@ updatePurchaseState (ingredients) {
     return  sum > 0 ;
 }
 purchaseHandler = () => {
-    this.setState({purchasing: true});
+    if (this.props.isAuthenticated) {
+        this.setState( { purchasing: true } );
+    } else {
+        this.props.onSetAuthRedirectPath('/checkout');
+        this.props.history.push('/auth');
+    }
 }
 purchaseCanhelHandler=()=>{
     this.setState({purchasing:false});
@@ -103,6 +108,7 @@ if(this.props.ings){
                 price={this.props.price}
                 disable={disableInfo}
                 ordered={this.purchaseHandler}
+                isAuth={this.props.isAuthenticated}
                 purchasable={this.updatePurchaseState(this.props.ings)}/>
         </Aux>
     );
@@ -132,7 +138,8 @@ const mapStateToProps= state =>{
 return{
     ings:state.burgerBuilder.ingredients,
     price:state.burgerBuilder.totalPrice,
-    error:state.burgerBuilder.error
+    error:state.burgerBuilder.error,
+    isAuthenticated: state.auth.token !== null
 };
 }
 const mapDispatchToProps=dispatch=>{
@@ -140,7 +147,8 @@ const mapDispatchToProps=dispatch=>{
         onIngredientAdded:(ingName)=>dispatch(BurgerBuilderActions.addIngredient(ingName)),
         onIngredientRemoved:(ingName)=>dispatch(BurgerBuilderActions.removeIngredient(ingName)),
    onInItIngredients:()=>dispatch(BurgerBuilderActions.initIngredients()),
-   onInItpurchased:()=>dispatch(BurgerBuilderActions.purchaseInit())
+   onInItpurchased:()=>dispatch(BurgerBuilderActions.purchaseInit()),
+   onSetAuthRedirectPath: (path) => dispatch(BurgerBuilderActions.setAuthRedirectPath(path))
     }
  
 

@@ -5,7 +5,7 @@ import Button from "../../UI/Button/Button"
 
 class OrderSummary extends Component{
   componentDidUpdate(){
-    console.log("ordersummer[] did update")
+    // console.log("ordersummer[] did update")
   }
 
   render(){
